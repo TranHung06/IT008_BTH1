@@ -7,14 +7,19 @@ namespace BTTH1_BT3
         int ng, th, n;
         static void Main()
         {
-            int ch ;
+            Program p = new Program();
+            p.repeat();
+        }
+        void repeat()
+        {
+            int ch;
             do
             {
                 Console.WriteLine("--Menu--");
                 Console.WriteLine("0. Thoat CT");
                 Console.WriteLine("1. Nhap ngay thang nam");
-                if (!int.TryParse(Console.ReadLine(), out ch)) 
-                Console.WriteLine("Lua chon khong hop le");
+                if (!int.TryParse(Console.ReadLine(), out ch))
+                    Console.WriteLine("Lua chon khong hop le");
                 switch (ch)
                 {
                     case 0:
@@ -33,10 +38,7 @@ namespace BTTH1_BT3
                         break;
                 }
             } while (ch != 0);
-            
-
         }
-
         bool input()
         {
             Console.WriteLine("Nhap ngay: ");

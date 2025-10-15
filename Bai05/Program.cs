@@ -8,6 +8,11 @@ namespace BTTH1_BT5
         int ng, th, n;
         static void Main()
         {
+            Program p = new Program();
+            p.repeat();
+        }
+        void repeat()
+        {
             int ch;
             do
             {
@@ -23,7 +28,11 @@ namespace BTTH1_BT5
                         break;
                     case 1:
                         Program i = new Program();
-                        i.input();
+                        if (!i.input())
+                        {
+                            Console.WriteLine("Ngay thang nam khong hop le.");
+                            continue;
+                        }
                         //Cho rang nam < 0 la nam TCN
                         if (i.test())
                         {
@@ -66,7 +75,21 @@ namespace BTTH1_BT5
             Console.WriteLine("Nhap thang: ");
             if (!int.TryParse(Console.ReadLine(), out th)) return false;
             Console.WriteLine("Nhap nam: ");
-            if (!int.TryParse(Console.ReadLine(), out n)) return false;
+            string? str = Console.ReadLine();
+            bool cd = true;
+            if (str != null)
+                for (int i = 0; i < str.Length; i++)
+                {
+                    if (!char.IsNumber(str[i]))
+                    {
+                        if (i == 0 && str[i] == '-')
+                            continue;
+                        cd = false;
+                        break;
+                    }
+
+                }
+            if (str == null || !(cd) || !int.TryParse(str, out n)) return false;
             return true;
         }
 

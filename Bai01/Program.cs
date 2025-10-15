@@ -4,35 +4,22 @@ namespace BTTH1_BT1
 {
     class Program
     {
+        int[] v = new int[0];
+        int n, minv = 0, maxv = 0;
         static void Main()
         {
-            int[] v;
-            int n, minv = 0, maxv = 0;
+            Program p = new Program();
             bool cd = false;
             do
             {
-                Console.WriteLine("Nhap so phan tu mang > 0: ");
-                if (!int.TryParse(Console.ReadLine(), out n) || n <= 0)
-                {
-                    Console.WriteLine("Khong hop le");
-                    continue;
-                }
-                Console.WriteLine("Nhap gia tri be nhat cua phan tu: ");
-                if (!int.TryParse(Console.ReadLine(), out minv))
-                {
-                    Console.WriteLine("Khong hop le");
-                    continue;
-                }
-                Console.WriteLine("Nhap gia tri lon nhat cua phan tu: ");
-                if (!int.TryParse(Console.ReadLine(), out maxv) || minv > maxv)
-                {
-                    Console.WriteLine("Khong hop le");
-                    continue;
-                }
+                if (p.input())
                 cd = true;
             } while (!cd);
-            v = createarr(n, minv, maxv);
-
+            p.v = createarr(p.n, p.minv, p.maxv);
+            p.repeat();
+        }
+        void repeat()
+        {
             int ch;
             do
             {
@@ -69,7 +56,30 @@ namespace BTTH1_BT1
                         break;
                 }
             } while (ch != 4);
+            
+        }
 
+        bool input()
+        {
+            Console.WriteLine("Nhap so phan tu mang > 0: ");
+            if (!int.TryParse(Console.ReadLine(), out n) || n <= 0)
+            {
+                Console.WriteLine("Khong hop le");
+                return false;
+            }
+            Console.WriteLine("Nhap gia tri be nhat cua phan tu: ");
+            if (!int.TryParse(Console.ReadLine(), out minv))
+            {
+                Console.WriteLine("Khong hop le");
+                return false;
+            }
+            Console.WriteLine("Nhap gia tri lon nhat cua phan tu: ");
+            if (!int.TryParse(Console.ReadLine(), out maxv) || minv > maxv)
+            {
+                Console.WriteLine("Khong hop le");
+                return false;
+            }
+            return true;
         }
 
         //In mảng

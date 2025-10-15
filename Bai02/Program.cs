@@ -4,24 +4,25 @@ namespace BTTH1_BT2
 {
     class Program
     {
+        int n;
         static void Main()
         {
-            int n;
-            int ch = -1;
+            Program p = new Program();
+            p.repeat();
+        }
+
+        void repeat()
+        {
+            int ch;
             do
             {
-                do
-                {
-                    Console.WriteLine("Nhap so nguyen duong > 0: ");
-                    if (!int.TryParse(Console.ReadLine(), out n))
-                        Console.WriteLine("Khong hop le");
-                } while (n <= 0);
+                input();
                 Console.WriteLine("--Menu--");
                 Console.WriteLine("1. Tinh tong so nguyen to.");
                 Console.WriteLine("2. Thoat.");
                 Console.WriteLine("Nhap lua chon: ");
-                if (!int.TryParse(Console.ReadLine(), out ch)) 
-                Console.WriteLine("Lua chon khong hop le");
+                if (!int.TryParse(Console.ReadLine(), out ch))
+                    Console.WriteLine("Lua chon khong hop le");
                 switch (ch)
                 {
                     case 1:
@@ -34,7 +35,15 @@ namespace BTTH1_BT2
                         break;
                 }
             } while (ch != 2);
-
+        }
+        void input()
+        {
+            do
+            {
+                Console.WriteLine("Nhap so nguyen duong > 0: ");
+                if (!int.TryParse(Console.ReadLine(), out n))
+                    Console.WriteLine("Khong hop le");
+            } while (n <= 0);
         }
 
         static bool isprime(int n)

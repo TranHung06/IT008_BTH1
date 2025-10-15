@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection.Metadata.Ecma335;
 
 namespace BTTH1_BT6
 {
@@ -7,6 +8,11 @@ namespace BTTH1_BT6
         int n, m, minv, maxv;
         int[,] v = new int[0,0];
         static void Main()
+        {
+            Program p = new Program();
+            p.repeat();
+        }
+        void repeat()
         {
             bool cd;
             Program i = new Program();
@@ -27,22 +33,22 @@ namespace BTTH1_BT6
                 Console.WriteLine("5. Xoa cot chua phan tu lon nhat trong ma tran.");
                 Console.WriteLine("6. Thoat");
                 Console.WriteLine("Nhap lua chon: ");
-                if (!int.TryParse(Console.ReadLine(), out ch)) 
-                Console.WriteLine("Lua chon khong hop le");
+                if (!int.TryParse(Console.ReadLine(), out ch))
+                    Console.WriteLine("Lua chon khong hop le");
                 switch (ch)
                 {
                     case 0:
                         i.printarr();
                         break;
                     case 1:
-                        int [,]max = i.findmax();
+                        int[,] max = i.findmax();
                         int min = i.findmin();
-                        Console.WriteLine("Phan tu lon nhat: " + max[0,1]);
+                        Console.WriteLine("Phan tu lon nhat: " + max[0, 1]);
                         Console.WriteLine("Phan tu be nhat: " + min);
                         break;
                     case 2:
                         int[,] mr = i.maxrow();
-                        Console.WriteLine($"Dong co tong lon nhat: {mr[0,0] +1} Co gia tri la {mr[0,1]}");
+                        Console.WriteLine($"Dong co tong lon nhat: {mr[0, 0] + 1} Co gia tri la {mr[0, 1]}");
                         break;
                     case 3:
                         int t = i.sumnotprime();
@@ -54,7 +60,7 @@ namespace BTTH1_BT6
                         do
                         {
                             Console.WriteLine($"Nhap vao dong k muon xoa >=1 va <= {i.v.GetLength(0)} :");
-                            
+
                             if (!int.TryParse(Console.ReadLine(), out k) || (k < 1 && k > i.v.GetLength(0)))
                             {
                                 Console.WriteLine("Du lieu khong hop le");
@@ -63,12 +69,11 @@ namespace BTTH1_BT6
                             cond = true;
                         } while (!cond);
                         i.delrowk(k);
-                        Console.WriteLine("Da xoa thanh cong");
+                        
                         break;
                     case 5:
                         int[,] delc = i.findmax();
-                        i.delcolk(delc[0,0]);
-                        Console.WriteLine("Da xoa thanh cong");
+                        i.delcolk(delc[0, 0]);
                         break;
                     case 6:
                         break;
@@ -77,9 +82,7 @@ namespace BTTH1_BT6
                         break;
                 }
             } while (ch != 6);
-
         }
-
         //Nhập thông tin
         bool input()
         {
@@ -112,6 +115,11 @@ namespace BTTH1_BT6
         //In mảng
         void printarr()
         {
+            if (v.GetLength(0)==0 && v.GetLength(1) == 0)
+            {
+                Console.WriteLine("Mang rong.");
+                return;
+            }
             for (int i = 0; i < v.GetLength(0); i++)
             {
                 for (int j = 0; j < v.GetLength(1); j++)
@@ -147,9 +155,13 @@ namespace BTTH1_BT6
             }
             return min;
         }
-        //Tìm số lớn nhất trong mảng
+        //Tìm số lớn nhất trong mảng đồng thời giữ lại chỉ số cột để tí xóa
         int[,] findmax()
         {
+            if (v.GetLength(0) ==0 || v.GetLength(1) == 0)
+            {
+                return new int[1, 3];
+            }
             int[,] max = new int[1, 2];
             max[0, 1] = v[0, 0];
             for (int i = 0; i < v.GetLength(0); i++)
@@ -208,7 +220,6 @@ namespace BTTH1_BT6
             }
             return sum;
         }
-
         static bool isprime(int v)
         {
             if (v < 2) return false;
@@ -221,7 +232,17 @@ namespace BTTH1_BT6
         //xóa dòng
         void delrowk(int k)
         {
-            if (v.GetLength(0) <= 1) v = new int[0,0];
+            if (v.GetLength(0) == 0)
+            {
+                Console.WriteLine("Khong con gi de xoa.");
+                return;
+            }
+            if (v.GetLength(0) <= 1)
+            {
+                v = new int[0, 0];
+                Console.WriteLine("Da xoa thanh cong");
+                return;
+            }
             int[,] res = new int[v.GetLength(0) - 1, v.GetLength(1)];
             int r = 0, c = 0;
             for (int i = 0; i < v.GetLength(0); i++)
@@ -243,11 +264,22 @@ namespace BTTH1_BT6
                     v[i,j] = res[i,j];
                 }
             }
+            Console.WriteLine("Da xoa thanh cong");
         }
         //xóa cột
         void delcolk(int k)
         {
-            if (v.GetLength(1) <= 1)  v = new int[0,0]; 
+            if (v.GetLength(1) == 0 ||v.GetLength(0) == 0)
+            {
+                Console.WriteLine("Khong con gi de xoa.");
+                return;
+            }
+            if (v.GetLength(1) <= 1)
+            {
+                v = new int[0, 0];
+                Console.WriteLine("Da xoa thanh cong");
+                return;
+            }
             int[,] res = new int[v.GetLength(0) , v.GetLength(1) - 1];
             int r = 0, c = 0;
             for (int i = 0; i < v.GetLength(0); i++)
@@ -272,6 +304,7 @@ namespace BTTH1_BT6
                     v[i, j] = res[i, j];
                 }
             }
+            Console.WriteLine("Da xoa thanh cong");
         }
     }
 }
